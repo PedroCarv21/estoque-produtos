@@ -30,23 +30,27 @@ public class Program {
 			String name = sc.nextLine();
 			System.out.print("Price: ");
 			Double price = Double.parseDouble(sc.nextLine());
-			if (typeOfProduct == 'c') {
-				Product commonProduct = new Product(name, price);
-				productList.add(commonProduct);
+			switch(typeOfProduct) {
+				case 'c':
+					Product commonProduct = new Product(name, price);
+					productList.add(commonProduct);
+					break;
+			
+				case 'i':
+					System.out.print("Customs fee: ");
+					Double customsFee = Double.parseDouble(sc.nextLine());
+					Product importProduct = new ImportedProduct(name, price, customsFee);
+					productList.add(importProduct);
+					break;
+				case 'u':
+					System.out.print("Manufacture date (DD/MM/YYYY): ");
+					String dateStr = sc.nextLine();
+					LocalDate date = LocalDate.parse(dateStr, dtf);
+					Product UsedProduct = new UsedProduct(name, price, date);
+					productList.add(UsedProduct);
+					break;
 			}
-			else if (typeOfProduct == 'i') {
-				System.out.print("Customs fee: ");
-				Double customsFee = Double.parseDouble(sc.nextLine());
-				Product importProduct = new ImportedProduct(name, price, customsFee);
-				productList.add(importProduct);
-			}
-			else if (typeOfProduct == 'u') {
-				System.out.print("Manufacture date (DD/MM/YYYY): ");
-				String dateStr = sc.nextLine();
-				LocalDate date = LocalDate.parse(dateStr, dtf);
-				Product UsedProduct = new UsedProduct(name, price, date);
-				productList.add(UsedProduct);
-			}
+			
 		}
 		System.out.printf("%nPRICE TAGS:%n");
 		for (Product p: productList) {
